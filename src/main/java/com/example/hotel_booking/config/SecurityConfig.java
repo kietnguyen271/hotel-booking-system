@@ -48,6 +48,8 @@ public class SecurityConfig {
                         // User — cần login
                         .requestMatchers("/api/bookings/**").authenticated()
                         .requestMatchers("/api/reviews/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/room-types/**").permitAll() // thêm dòng này
 
                         // Còn lại cần login
                         .anyRequest().authenticated()
