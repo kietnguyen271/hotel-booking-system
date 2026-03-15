@@ -28,9 +28,13 @@ public class AuthService {
         }
 
         // 2. Lấy role USER từ DB
-        Role role = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Role không tồn tại!"));
+        String roleName = (request.getRole() != null &&
+                request.getRole().equals("ROLE_HOTEL_OWNER"))
+                ? "ROLE_HOTEL_OWNER"
+                : "ROLE_USER";
 
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new RuntimeException("Role không tồn tại!"));
         // 3. Tạo user mới
         User user = new User();
         user.setFullName(request.getFullName());

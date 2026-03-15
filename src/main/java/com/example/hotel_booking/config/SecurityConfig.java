@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -32,14 +33,22 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        // API public — ai cũng vào được
+                        // Public — ai cũng vào được
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/hotels/**").permitAll()
-                        // API cần login
+                        .requestMatchers(HttpMethod.GET, "/api/hotels").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
+
+                        // Hotel Owner
+                        .requestMatchers("/api/hotel-owner/**")
+                        .hasAnyRole("HOTEL_OWNER", "ADMIN")
+
+                        // Admin only
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // User — cần login
                         .requestMatchers("/api/bookings/**").authenticated()
                         .requestMatchers("/api/reviews/**").authenticated()
-                        // API chỉ ADMIN
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         // Còn lại cần login
                         .anyRequest().authenticated()
                 )

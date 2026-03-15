@@ -18,4 +18,5 @@ public class RegisterRequest {
     private String password;
 
     private String phone;
+    private String role; // "ROLE_USER" hoặc "ROLE_HOTEL_OWNER"
 }
