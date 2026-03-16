@@ -14,4 +14,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByHotelIdAndStatus(Long hotelId, RoomStatus status);
 
     boolean existsByHotelIdAndRoomNumber(Long hotelId, String roomNumber);
+    List<Room> findByHotelIdOrderByRoomNumber(Long hotelId);
 }

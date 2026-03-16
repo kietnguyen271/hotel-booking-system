@@ -116,4 +116,10 @@ public class RoomService {
 
         return toRoomResponse(roomRepository.save(room));
     }
+    public List<RoomResponse> getRoomsByHotel(Long hotelId) {
+        return roomRepository.findByHotelIdOrderByRoomNumber(hotelId)
+                .stream()
+                .map(this::toRoomResponse)
+                .collect(Collectors.toList());
+    }
 }

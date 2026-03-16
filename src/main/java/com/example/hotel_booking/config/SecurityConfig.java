@@ -33,25 +33,24 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        // Public — ai cũng vào được
+                        // ── PUBLIC ──
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/room-types/**").permitAll()
 
-                        // Hotel Owner
+                        // ── HOTEL OWNER ──
                         .requestMatchers("/api/hotel-owner/**")
                         .hasAnyRole("HOTEL_OWNER", "ADMIN")
 
-                        // Admin only
+                        // ── ADMIN ──
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                        // User — cần login
+                        // ── USER (cần login) ──
                         .requestMatchers("/api/bookings/**").authenticated()
                         .requestMatchers("/api/reviews/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/room-types/**").permitAll() // thêm dòng này
 
-                        // Còn lại cần login
+                        // ── CÒN LẠI ──
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

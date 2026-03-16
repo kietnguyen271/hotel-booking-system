@@ -71,4 +71,11 @@ public class RoomController {
                 .orElseThrow(() ->
                         new RuntimeException("User không tồn tại!"));
     }
+    // Xem tất cả phòng của hotel (public)
+    @GetMapping("/hotels/{hotelId}/rooms")
+    public ResponseEntity<List<RoomResponse>> getRoomsByHotel(
+            @PathVariable Long hotelId) {
+        return ResponseEntity.ok(
+                roomService.getRoomsByHotel(hotelId));
+    }
 }
