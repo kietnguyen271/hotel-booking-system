@@ -10,6 +10,9 @@ import java.util.List;
 @Table(name = "hotels")
 public class Hotel {
 
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private List<HotelImage> images;
+
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner; // chủ khách sạn

@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/hotels").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/room-types/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/*/images").permitAll()
 
                         // ── HOTEL OWNER ──
                         .requestMatchers("/api/hotel-owner/**")
